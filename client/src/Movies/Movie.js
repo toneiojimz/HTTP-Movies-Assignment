@@ -1,6 +1,8 @@
 import React from "react";
 import axios from "axios";
 import MovieCard from "./MovieCard";
+import bulma from 'bulma';
+import styled from 'styled-components';
 export default class Movie extends React.Component {
   constructor(props) {
     super(props);
@@ -53,11 +55,11 @@ export default class Movie extends React.Component {
     return (
       <div className="save-wrapper">
         <MovieCard movie={this.state.movie} />
-        <div className="save-button" onClick={this.saveMovie}>
-          Save
+        <div className='buttons'>
+        <button className="button is-warning" onClick={this.saveMovie}>Save</button>
+        <button className='button is-success has-gap' onClick={handleEditClick}>Edit</button>
+        <button className='button is-danger has-gap' onClick={handleDelete}>Delete</button>
         </div>
-        <button onClick={handleEditClick}>Edit</button>
-        <button onClick={handleDelete}>Delete</button>
       </div>
     );
   }
