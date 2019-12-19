@@ -38,6 +38,7 @@ const UpdateMovie = props => {
             .then (res => {
                 
                 props.history.push(`/movies-list/${movie.id}`);
+                props.history.push(`/`)
             })
             .catch(err => console.log(err));
     };
