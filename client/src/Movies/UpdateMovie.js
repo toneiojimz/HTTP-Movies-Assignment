@@ -4,8 +4,8 @@ import axios from 'axios';
 const initialMovie = {
     title:'',
     director: '',
-    score: '',
-    actors: [] 
+    metascore: '',
+    starts: [] 
 
 };
 
@@ -13,24 +13,18 @@ const UpdateMovie = props => {
     const[movie, SetMovie] = useState(initialMovie);
 
     useEffect(() => {
-        const movieToEdit = props.items.find(
-            e => `${e.id}` === props.match.params.id
-        );
-    }, [props.movies, props.match.params.id]);
+        axios
+            .get(`http://localhost:5000/api/movies/${props.match.params.id}`)
+            .then(res => {
+                console.log(res);
+            })
+            .catch(err => console.log(err));
+    }, [props.match.params.id]);
 
 
-    const changeHandler = ev => {
-        ev.persist();
-        let value = ev.target.value;
-        if(ev.target.title === 'director'){
-            value = parseInt(value, 10)
-        }
-        
-        setMovie ({
-            ...movie, 
-            [ev.target.title]: value
-        });
-    };
+    const changeHandler = e => {
+        SetMovie({...movie, [e.target.name] : e.target.value})  
+    };;
 
     const handleSubmit = e => {
         e.preventDefault();
@@ -39,7 +33,7 @@ const UpdateMovie = props => {
             .put(`http://http://localhost:3000/movies/${movie.id}`, movie)
             .then (res => {
                 props.UpdateMovie(res.data);
-                props.history.push(`/movie-list/${movie.id}`);
+                props.history.push(`/movies/${movie.id}`);
             })
             .catch(err => console.log(err));
     };
@@ -52,32 +46,33 @@ const UpdateMovie = props => {
                 type='text'
                 name='name'
                 onChange={changeHandler}
-                placeholder='title'
+                placeholder='Title'
                 value={movie.title}
                 />
                  <input 
                 type='text'
                 name='director'
                 onChange={changeHandler}
-                placeholder='director'
+                placeholder='Director'
                 value={movie.director}
                 />
                  <input 
                 type='text'
                 name='score'
                 onChange={changeHandler}
-                placeholder='score'
-                value={movie.score}
+                placeholder='Metascore'
+                value={movie.metascore}
                 />
                  <input 
                 type='text'
                 name='actors'
                 onChange={changeHandler}
-                placeholder='actors'
-                value={movie.actors}
+                placeholder='Actors'
+                value={movie.stars}
                 />
                 <button>Update Movie</button>
             </form>
         </div>
     )
-}
+};
+export default UpdateMovie;
