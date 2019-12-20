@@ -1,23 +1,22 @@
 import React from 'react';
+import styled from 'styled-components';
+import bulma from 'bulma';
 
 const MovieCard = props => {
   const { title, director, metascore, stars } = props.movie;
   return (
-    <div className="movie-card">
-      <h2>{title}</h2>
-      <div className="movie-director">
+    <div className="box">
+      <h2 className='title is-strong'>{title}</h2>
+      <div className="title is-4">
         Director: <em>{director}</em>
       </div>
-      <div className="movie-metascore">
+      <div className="title is-4">
         Metascore: <strong>{metascore}</strong>
       </div>
-      <h3>Actors</h3>
-
-      {stars.map(star => (
-        <div key={star} className="movie-star">
-          {star}
+      <h2 className='title is-3'>Actors:</h2>
+        <div className="title is-5">
+          {stars}
         </div>
-      ))}
     </div>
   );
 };
